@@ -1,2 +1,3 @@
 id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
 access_summer_training_year,access_summer_training_year,model_summer_training_year,base.group_user,1,1,1,1
+access_summer_training_plan,access_summer_training_plan,model_summer_training_plan,base.group_user,1,1,1,1

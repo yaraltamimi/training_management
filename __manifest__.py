@@ -4,10 +4,10 @@
     'category': 'Education',
     'summary': 'Manage training and courses',
     'description': 'A module for managing summer training applications and courses.',
-    'depends': ['base'],
-    'data': [
+    'depends': ['base', 'mail'],
+ 'data': [
         'security/ir.model.access.csv',
-        'views/summer_training_year_views.xml',
+        'views/summer_training_views.xml',
     ],
     'installable': True,
     'application': True,

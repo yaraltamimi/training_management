@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="view_summer_training_year_form" model="ir.ui.view">
+        <field name="name">summer.training.year.form</field>
+        <field name="model">summer.training.year</field>
+        <field name="arch" type="xml">
+            <form string="Training Year">
+                <header>
+                    <button name="action_planned" string="Plan" type="object" invisible="state != 'draft'" class="btn-primary"/>
+                    <button name="action_ongoing" string="Start" type="object" invisible="state != 'planned'" class="btn-primary"/>
+                    <button name="action_done" string="Done" type="object" invisible="state != 'ongoing'" class="btn-success"/>
+                    <button name="action_archived" string="Archive" type="object" invisible="state in ('done', 'archived')"/>
+                    
+                    <field name="state" widget="statusbar" statusbar_visible="draft,planned,ongoing,done,archived"/>
+                </header>
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="name"/>
+                            <field name="start_date"/>
+                            <field name="end_date"/>
+                        </group>
+                        <group>
+                            <field name="weeks_count"/>
+                        </group>
+                    </group>
+                    
+                    <notebook>
+                        <page string="Training Plans &amp; Weeks">
+                            <field name="plan_ids">
+                                <list editable="bottom">
+                                    <field name="sequence" widget="handle"/>
+                                    <field name="name"/>
+                                    <field name="activity_type"/>
+                                    <field name="supervisor_feedback"/>
+                                    <field name="is_completed" widget="boolean_toggle"/>
+                                </list>
+                            </field>
+                        </page>
+
+                        <page string="Documents &amp; Reports">
+                            <field name="document_ids">
+                                <list editable="bottom">
+                                    <field name="name"/>
+                                    <field name="document_type"/>
+                                    <field name="document_file" filename="file_name"/>
+                                    <field name="file_name" invisible="1"/>
+                                </list>
+                            </field>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_summer_training_year_tree" model="ir.ui.view">
+        <field name="name">summer.training.year.tree</field>
+        <field name="model">summer.training.year</field>
+        <field name="arch" type="xml">
+            <list string="Training Years">
+                <field name="name"/>
+                <field name="start_date"/>
+                <field name="end_date"/>
+                <field name="weeks_count"/>
+                <field name="state" widget="badge"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="action_summer_training_year" model="ir.actions.act_window">
+        <field name="name">Training Years</field>
+        <field name="res_model">summer.training.year</field>
+        <field name="view_mode">list,form</field>
+    </record>
+
+    
+    <menuitem id="menu_summer_training_root" name="Training Management"/>
+    <menuitem id="menu_summer_training_year" name="Training Years" parent="menu_summer_training_root" action="action_summer_training_year"/>
+
+</odoo>
