@@ -49,6 +49,16 @@
                                 </list>
                             </field>
                         </page>
+
+                        <page string="Trainees">
+                            <field name="trainee_ids">
+                            <list editable="bottom">
+                                    <field name="name"/>
+                                    <field name="university"/>
+                                    <field name="state"/>
+                             </list>
+                             </field>
+                        </page>
                     </notebook>
                 </sheet>
             </form>
