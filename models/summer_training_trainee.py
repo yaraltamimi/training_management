@@ -6,7 +6,6 @@ class SummerTrainingTrainee(models.Model):
     _description = 'Summer Training Trainee'
     _inherit = ['mail.thread', 'mail.activity.mixin']
 
-    # ---- البيانات الشخصية ----
     name = fields.Char(string='Trainee Name', required=True, tracking=True)
     national_id = fields.Char(string='National ID')
     email = fields.Char(string='Email')
@@ -17,7 +16,6 @@ class SummerTrainingTrainee(models.Model):
     ('female', 'Female'),
     ], string='Gender')
 
-    # ---- البيانات الأكاديمية ----
     university = fields.Char(string='University / Institution')
     major = fields.Char(string='Major / Specialization')
     academic_level = fields.Selection([
@@ -29,7 +27,6 @@ class SummerTrainingTrainee(models.Model):
     ], string='Academic Level')
     gpa = fields.Float(string='GPA')
 
-    # ---- الربط بالسنة التدريبية ----
     year_id = fields.Many2one('summer.training.year', string='Training Year', required=True, tracking=True)
 
     state = fields.Selection([
