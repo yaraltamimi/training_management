@@ -1,0 +1,195 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* school_management
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 18.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-07-17 08:17+0000\n"
+"PO-Revision-Date: 2026-07-17 08:17+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: school_management
+#: model_terms:ir.ui.view,arch_db:school_management.school_student_form_view
+msgid "Activate"
+msgstr "تفعيل"
+
+#. module: school_management
+#: model:ir.model.fields.selection,name:school_management.selection__school_student__state__active
+msgid "Active"
+msgstr "نشط"
+
+#. module: school_management
+#: model:ir.model.fields,field_description:school_management.field_school_student__age
+msgid "Age"
+msgstr "العمر"
+
+#. module: school_management
+#: model:ir.model.fields,field_description:school_management.field_school_student__class_id
+msgid "Class"
+msgstr "الصف"
+
+#. module: school_management
+#: model:ir.model.fields,field_description:school_management.field_school_class__name
+msgid "Class Name"
+msgstr "اسم الصف"
+
+#. module: school_management
+#: model:ir.model.fields,field_description:school_management.field_school_class__create_uid
+#: model:ir.model.fields,field_description:school_management.field_school_student__create_uid
+msgid "Created by"
+msgstr "أنشأ بواسطة"
+
+#. module: school_management
+#: model:ir.model.fields,field_description:school_management.field_school_class__create_date
+#: model:ir.model.fields,field_description:school_management.field_school_student__create_date
+msgid "Created on"
+msgstr "تاريخ الإنشاء"
+
+#. module: school_management
+#: model:ir.model.fields,field_description:school_management.field_school_class__display_name
+#: model:ir.model.fields,field_description:school_management.field_school_student__display_name
+msgid "Display Name"
+msgstr "اسم العرض"
+
+#. module: school_management
+#: model:ir.model.fields.selection,name:school_management.selection__school_student__state__draft
+msgid "Draft"
+msgstr "مسودة"
+
+#. module: school_management
+#: model:ir.model.fields.selection,name:school_management.selection__school_student__gender__female
+msgid "Female Student"
+msgstr "طالبة"
+
+#. module: school_management
+#: model:ir.model.fields,field_description:school_management.field_school_student__first_name
+msgid "First Name"
+msgstr "الاسم الأول"
+
+#. module: school_management
+#: model:ir.model.fields,field_description:school_management.field_school_student__gender
+msgid "Gender"
+msgstr "الجنس"
+
+#. module: school_management
+#: model:ir.model.fields,field_description:school_management.field_school_class__id
+#: model:ir.model.fields,field_description:school_management.field_school_student__id
+msgid "ID"
+msgstr "المعرف"
+
+#. module: school_management
+#: model:ir.model.fields.selection,name:school_management.selection__school_student__state__inactive
+msgid "Inactive"
+msgstr "غير نشط"
+
+#. module: school_management
+#: model:ir.model.fields,field_description:school_management.field_school_student__is_active_teacher
+msgid "Is Active Teacher"
+msgstr "معلم نشط"
+
+#. module: school_management
+#: model:ir.model,name:school_management.model_account_move
+msgid "Journal Entry"
+msgstr "قيد اليومية"
+
+#. module: school_management
+#: model:ir.model.fields,field_description:school_management.field_school_student__last_name
+msgid "Last Name"
+msgstr "اسم العائلة"
+
+#. module: school_management
+#: model:ir.model.fields,field_description:school_management.field_school_class__write_uid
+#: model:ir.model.fields,field_description:school_management.field_school_student__write_uid
+msgid "Last Updated by"
+msgstr "آخر تحديث بواسطة"
+
+#. module: school_management
+#: model:ir.model.fields,field_description:school_management.field_school_class__write_date
+#: model:ir.model.fields,field_description:school_management.field_school_student__write_date
+msgid "Last Updated on"
+msgstr "آخر تحديث في"
+
+#. module: school_management
+#: model:ir.model.fields.selection,name:school_management.selection__school_student__gender__male
+msgid "Male Student"
+msgstr "طالب"
+
+#. module: school_management
+#: model_terms:ir.ui.view,arch_db:school_management.school_student_form_view
+msgid "Move to Draft"
+msgstr "نقل إلى المسودة"
+
+#. module: school_management
+#: model:ir.model.fields,field_description:school_management.field_school_student__phone
+msgid "Phone Number"
+msgstr "رقم الهاتف"
+
+#. module: school_management
+#: model:ir.model,name:school_management.model_school_class
+msgid "School Class"
+msgstr "الصف الدراسي"
+
+#. module: school_management
+#: model:ir.ui.menu,name:school_management.school_management_menu
+msgid "School Management"
+msgstr "إدارة المدرسة"
+
+#. module: school_management
+#: model:ir.model,name:school_management.model_school_student
+msgid "School Student Model"
+msgstr "نموذج الطالب المدرسي"
+
+#. module: school_management
+#: model:res.groups,name:school_management.school_user_group
+msgid "School User"
+msgstr "مستخدم المدرسة"
+
+#. module: school_management
+#: model:ir.model.fields,field_description:school_management.field_school_student__state
+msgid "State"
+msgstr "الحالة"
+
+#. module: school_management
+#: model:ir.model.fields,field_description:school_management.field_school_student__full_name
+msgid "String Name"
+msgstr "الاسم النصي"
+
+#. module: school_management
+#: model_terms:ir.ui.view,arch_db:school_management.school_student_form_view
+msgid "Student Form"
+msgstr "نموذج الطالب"
+
+#. module: school_management
+#: model:ir.model.fields,field_description:school_management.field_school_student__student_id
+msgid "Student ID"
+msgstr "معرّف الطالب"
+
+#. module: school_management
+#: model_terms:ir.ui.view,arch_db:school_management.school_student_list_view
+msgid "Student List"
+msgstr "قائمة الطلاب"
+
+#. module: school_management
+#: model:ir.actions.act_window,name:school_management.action_school_student
+#: model:ir.model.fields,field_description:school_management.field_school_class__student_ids
+#: model:ir.ui.menu,name:school_management.school_student_menu
+msgid "Students"
+msgstr "الطلاب"
+
+#. module: school_management
+#: model:ir.model.fields,field_description:school_management.field_school_student__teacher_id
+msgid "Teacher"
+msgstr "المعلم"
+
+#. module: school_management
+#: model:ir.model.fields,field_description:school_management.field_account_bank_statement_line__custom_note
+#: model:ir.model.fields,field_description:school_management.field_account_move__custom_note
+msgid "customer Note"
+msgstr "ملاحظة العميل"
