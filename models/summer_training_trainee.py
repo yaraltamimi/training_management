@@ -28,6 +28,9 @@ class SummerTrainingTrainee(models.Model):
     gpa = fields.Float(string='GPA')
 
     year_id = fields.Many2one('summer.training.year', string='Training Year', required=True, tracking=True)
+    document_ids = fields.One2many('summer.training.trainee.document', 'trainee_id', string='Documents')
+
+
 
     state = fields.Selection([
     ('registered', 'Registered'),

@@ -51,6 +51,19 @@
                     <field name="withdrawal_reason"/>
                    </group>
               </group>
+              <notebook>
+                     <page string="Documents">
+                         <field name="document_ids">
+                            <list editable="bottom">
+                                <field name="name"/>
+                                <field name="document_type"/>
+                                <field name="file" filename="file_name"/>
+                                <field name="file_name" invisible="1"/>
+                                <field name="upload_date"/>
+                            </list>
+                         </field>
+                      </page>
+               </notebook>
         </sheet>
       </form>
    </field>
