@@ -16,7 +16,18 @@ class SummerTrainingYear(models.Model):
     document_ids = fields.One2many('summer.training.year.document', 'training_year_id', string='Documents')
     trainee_ids = fields.One2many('summer.training.trainee', 'year_id', string='Trainees')
     team_ids = fields.One2many('summer.training.team', 'year_id', string='Training Team')
+    survey_ids = fields.One2many('summer.training.survey', 'year_id', string='Surveys')
 
+
+    avg_satisfaction = fields.Float(string='Average Satisfaction', compute='_compute_avg_satisfaction', store=True)
+
+    satisfaction_stars = fields.Selection([
+        ('0', '0'),
+        ('1', '1'),
+        ('2', '2'),
+        ('3', '3'),
+        ('4', '4'),
+    ], string='Satisfaction (Stars)', compute='_compute_satisfaction_stars', store=True)
     
     state = fields.Selection([
         ('draft', 'Draft'),
@@ -38,6 +49,22 @@ class SummerTrainingYear(models.Model):
                     record.weeks_count = max(1, round(days / 7))
             else:
                 record.weeks_count = 0
+
+    @api.depends('survey_ids.overall_satisfaction')
+    def _compute_avg_satisfaction(self):
+        for record in self:
+            ratings = record.survey_ids.mapped('overall_satisfaction')
+            if ratings:
+                values = [int(r) for r in ratings if r]
+                record.avg_satisfaction = sum(values) / len(values)
+            else:
+                record.avg_satisfaction = 0.0
+
+    @api.depends('avg_satisfaction')
+    def _compute_satisfaction_stars(self):
+        for record in self:
+            stars = round(record.avg_satisfaction) - 1
+            record.satisfaction_stars = str(max(0, min(4, stars)))
 
     @api.constrains('start_date', 'end_date')
     def _check_dates(self):
