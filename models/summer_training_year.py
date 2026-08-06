@@ -15,6 +15,8 @@ class SummerTrainingYear(models.Model):
     plan_ids = fields.One2many('summer.training.plan', 'year_id', string='Training Plans & Weeks')
     document_ids = fields.One2many('summer.training.year.document', 'training_year_id', string='Documents')
     trainee_ids = fields.One2many('summer.training.trainee', 'year_id', string='Trainees')
+    team_ids = fields.One2many('summer.training.team', 'year_id', string='Training Team')
+
     
     state = fields.Selection([
         ('draft', 'Draft'),

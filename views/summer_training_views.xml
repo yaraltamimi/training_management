@@ -59,6 +59,19 @@
                              </list>
                              </field>
                         </page>
+
+                        <page string="Training Team">
+                            <field name="team_ids">
+                            <list editable="bottom">
+                                    <field name="name"/>
+                                    <field name="role"/>
+                                    <field name="phone"/>
+                                    <field name="email"/>                    
+                             </list>
+                             </field>
+                        </page>
+
+
                     </notebook>
                 </sheet>
             </form>
