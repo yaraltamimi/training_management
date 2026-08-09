@@ -4,21 +4,37 @@ from odoo.exceptions import ValidationError
 class SummerTrainingYear(models.Model):
     _name = 'summer.training.year'
     _description = 'Summer Training Year'
+    _inherit = ['mail.thread', 'mail.activity.mixin']
 
     name = fields.Char(string='Year Name', required=True)
     start_date = fields.Date(string='Start Date', required=True)
     end_date = fields.Date(string='End Date', required=True)
     
-    weeks_count = fields.Integer(string='Number of Weeks', compute='_compute_weeks_and_hours', store=True)
-    total_hours = fields.Integer(string='Total Hours', compute='_compute_weeks_and_hours', store=True)
+    
+    training_type = fields.Selection([
+        ('onsite', 'حضوري'),
+        ('remote', 'عن بعد'),
+        ('hybrid', 'هجين')
+    ], string='نوع التدريب', default='onsite', tracking=True)
+
+    weeks_count = fields.Integer(string='Number of Weeks', compute='_compute_weeks', store=True)
     
     plan_ids = fields.One2many('summer.training.plan', 'year_id', string='Training Plans & Weeks')
     document_ids = fields.One2many('summer.training.year.document', 'training_year_id', string='Documents')
-    
-    trainee_ids = fields.One2many('summer.training.trainee', 'year_id', string='Trainees')    
-    
-    trainee_count = fields.Integer(string='Trainee Count', compute='_compute_trainee_count')
+    trainee_ids = fields.One2many('summer.training.trainee', 'year_id', string='Trainees')
+    team_ids = fields.One2many('summer.training.team', 'year_id', string='Training Team')
+    survey_ids = fields.One2many('summer.training.survey', 'year_id', string='Surveys')
 
+    avg_satisfaction = fields.Float(string='Average Satisfaction', compute='_compute_avg_satisfaction', store=True)
+
+    satisfaction_stars = fields.Selection([
+        ('0', '0'),
+        ('1', '1'),
+        ('2', '2'),
+        ('3', '3'),
+        ('4', '4'),
+    ], string='Satisfaction (Stars)', compute='_compute_satisfaction_stars', store=True)
+    
     state = fields.Selection([
         ('draft', 'Draft'),
         ('planned', 'Planned'),
@@ -27,56 +43,40 @@ class SummerTrainingYear(models.Model):
         ('archived', 'Archived')
     ], string='Status', default='draft', tracking=True)
 
-    @api.depends('trainee_ids')
-    def _compute_trainee_count(self):
-        for record in self:
-            record.trainee_count = len(record.trainee_ids)
-
     @api.depends('start_date', 'end_date')
-    def _compute_weeks_and_hours(self):
+    def _compute_weeks(self):
         for record in self:
             if record.start_date and record.end_date:
                 if record.end_date < record.start_date:
                     record.weeks_count = 0
-                    record.total_hours = 0
                 else:
                     delta = record.end_date - record.start_date
                     days = delta.days + 1
-                    weeks = max(1, round(days / 7))
-                    record.weeks_count = weeks
-                    # 30 ساعة لكل أسبوع (6 ساعات يومياً × 5 أيام)
-                    record.total_hours = weeks * 30
+                    record.weeks_count = max(1, round(days / 7))
             else:
                 record.weeks_count = 0
-                record.total_hours = 0
+
+    @api.depends('survey_ids.overall_satisfaction')
+    def _compute_avg_satisfaction(self):
+        for record in self:
+            ratings = record.survey_ids.mapped('overall_satisfaction')
+            if ratings:
+                values = [int(r) for r in ratings if r]
+                record.avg_satisfaction = sum(values) / len(values)
+            else:
+                record.avg_satisfaction = 0.0
+
+    @api.depends('avg_satisfaction')
+    def _compute_satisfaction_stars(self):
+        for record in self:
+            stars = round(record.avg_satisfaction) - 1
+            record.satisfaction_stars = str(max(0, min(4, stars)))
 
     @api.constrains('start_date', 'end_date')
     def _check_dates(self):
         for record in self:
             if record.start_date and record.end_date and record.end_date < record.start_date:
                 raise ValidationError("End Date cannot be earlier than Start Date!")
-
-    def action_open_trainees(self):
-        self.ensure_one()
-        return {
-            'name': 'Trainees',
-            'type': 'ir.actions.act_window',
-            'res_model': 'summer.training.trainee',
-            'view_mode': 'list,form',
-            'domain': [('year_id', '=', self.id)],
-            'context': {'default_year_id': self.id},
-        }
-
-    def action_open_plans(self):
-        self.ensure_one()
-        return {
-            'name': 'Training Plans',
-            'type': 'ir.actions.act_window',
-            'res_model': 'summer.training.plan',
-            'view_mode': 'list,form',
-            'domain': [('year_id', '=', self.id)],
-            'context': {'default_year_id': self.id},
-        }
 
     def action_planned(self):
         for record in self:

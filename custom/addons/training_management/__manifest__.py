@@ -1,14 +1,17 @@
 {
     'name': 'Training Management',
-    'version': '18.0.1.0.1',
+    'version': '18.0.1.0.0',
     'category': 'Education',
     'summary': 'Manage training and courses',
-    'description': 'A module for managing summer training applications, years, plans, and trainees.',
+    'description': 'A module for managing summer training applications and courses.',
     'depends': ['base', 'mail'],
-    'data': [
-        'security/ir.model.access.csv',
+'data': [
+        'security/training_security.xml',    
+        'security/ir.model.access.csv',      
+        'views/summer_training_views.xml',
         'views/summer_training_trainee_views.xml',
-        'views/summer_training_year_views.xml',
+        'views/summer_training_team_views.xml',
+        'views/summer_training_survey_views.xml',
     ],
     'installable': True,
     'application': True,

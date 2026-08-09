@@ -1,53 +1,80 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
 
-    <!-- قائمة المتدربين العامة (للقراءة والاستعراض فقط) -->
-    <record id="view_summer_training_trainee_tree" model="ir.ui.view">
-        <field name="name">summer.training.trainee.tree</field>
-        <field name="model">summer.training.trainee</field>
-        <field name="arch" type="xml">
-            <list string="Trainees" create="false" edit="false">
-                <field name="name"/>
-                <field name="year_id" readonly="1"/>
-                <field name="university"/>
-                <field name="state" widget="badge"/>
-            </list>
-        </field>
-    </record>
+  <record id="view_summer_training_trainee_list" model="ir.ui.view">
+     <field name="name">summer.training.trainee.list</field>
+     <field name="model">summer.training.trainee</field>
+     <field name="arch" type="xml">
+        <list string="Trainees">
+           <field name="name"/>
+           <field name="year_id"/>
+           <field name="university"/>
+           <field name="academic_level"/>
+           <field name="state"/>
+        </list>
 
-    <!-- نموذج المتدرب (عرض البيانات للقراءة فقط) -->
+      </field>
+   </record>
+
     <record id="view_summer_training_trainee_form" model="ir.ui.view">
-        <field name="name">summer.training.trainee.form</field>
-        <field name="model">summer.training.trainee</field>
-        <field name="arch" type="xml">
-            <form string="Trainee" create="false" edit="false">
-                <sheet>
-                    <group string="Training Year Information">
-                        <field name="year_id" readonly="1"/>
-                    </group>
-                    <group string="Trainee Details">
-                        <field name="name" readonly="1"/>
-                        <field name="national_id" readonly="1"/>
-                        <field name="university" readonly="1"/>
-                        <field name="major" readonly="1"/>
-                        <field name="state" widget="badge"/>
-                    </group>
-                </sheet>
-            </form>
-        </field>
-    </record>
+       <field name="name">summer.training.trainee.form</field>
+       <field name="model">summer.training.trainee</field>
+       <field name="arch" type="xml">
+           <form>
+              <header>
+                   <button name="action_withdraw" string="Withdraw" type="object" invisible="state == 'withdrawn'" class="oe_highlight"/>
+                   <field name="state" widget="statusbar" statusbar_visible="registered,ongoing,completed,withdrawn"/>
+              </header>
+        <sheet>
+              <group>
+                    <group string="Personal Information">
+                       <field name="name"/>
+                       <field name="national_id"/>
+                       <field name="email"/>
+                       <field name="phone"/>
+                       <field name="birth_date"/>
+                       <field name="gender"/>
+                     </group>
+              <group string="Academic Information">
+                    <field name="university"/>
+                    <field name="major"/>
+                    <field name="academic_level"/>
+                    <field name="gpa"/>
+                   </group>
+             </group>
+             <group>
+                    <group string="Training Year">
+                        <field name="year_id"/>
+                     </group>
+              <group string="Withdrawal Details" invisible="state != 'withdrawn'">
+                    <field name="withdrawal_date"/>
+                    <field name="withdrawal_reason"/>
+                   </group>
+              </group>
+              <notebook>
+                     <page string="Documents">
+                         <field name="document_ids">
+                            <list editable="bottom">
+                                <field name="name"/>
+                                <field name="document_type"/>
+                                <field name="file" filename="file_name"/>
+                                <field name="file_name" invisible="1"/>
+                                <field name="upload_date"/>
+                            </list>
+                         </field>
+                      </page>
+               </notebook>
+        </sheet>
+      </form>
+   </field>
+</record>
 
-    <record id="action_summer_training_trainee" model="ir.actions.act_window">
-        <field name="name">Trainees</field>
-        <field name="res_model">summer.training.trainee</field>
-        <field name="view_mode">list,form</field>
-        <field name="help" type="html">
-            <p class="o_view_nocontent_smiling_face">
-                Trainees will appear here automatically when added from Training Years.
-            </p>
-        </field>
-    </record>
+       <record id="action_summer_training_trainee" model="ir.actions.act_window">
+              <field name="name">Trainees</field>
+              <field name="res_model">summer.training.trainee</field>
+              <field name="view_mode">list,form</field>
+        </record>
 
-    <menuitem id="menu_summer_training_trainee" name="Trainees" parent="menu_summer_training_root" action="action_summer_training_trainee" sequence="20"/>
+            <menuitem id="menu_summer_training_trainee" name="Trainees" parent="menu_summer_training_root" action="action_summer_training_trainee" sequence="20"/>
 
 </odoo>
