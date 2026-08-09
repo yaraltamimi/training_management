@@ -12,6 +12,8 @@ class SummerTrainingYear(models.Model):
     reference = fields.Char(string='Reference Number', copy=False, readonly=True, default='New')
     
     weeks_count = fields.Integer(string='Number of Weeks', compute='_compute_weeks', store=True)
+    hours_per_week = fields.Float(string='Hours per Week', default=0.0)
+    total_hours = fields.Float(string='Total Hours', compute='_compute_total_hours', store=True)
     
     plan_ids = fields.One2many('summer.training.plan', 'year_id', string='Training Plans & Weeks')
     document_ids = fields.One2many('summer.training.year.document', 'training_year_id', string='Documents')
@@ -51,6 +53,11 @@ class SummerTrainingYear(models.Model):
             else:
                 record.weeks_count = 0
 
+    @api.depends('weeks_count', 'hours_per_week')
+    def _compute_total_hours(self):
+        for record in self:
+            record.total_hours = record.weeks_count * record.hours_per_week
+
     @api.depends('survey_ids.overall_satisfaction')
     def _compute_avg_satisfaction(self):
         for record in self:
@@ -81,6 +88,15 @@ class SummerTrainingYear(models.Model):
         for record in self:
             if record.start_date and record.end_date and record.end_date < record.start_date:
                 raise ValidationError("End Date cannot be earlier than Start Date!")
+
+            if record.start_date and record.end_date:
+                overlapping = self.search([
+                    ('id', '!=', record.id),
+                    ('start_date', '<=', record.end_date),
+                    ('end_date', '>=', record.start_date),
+                ])
+                if overlapping:
+                    raise ValidationError("This training year's dates overlap with an existing training year: %s" % overlapping[0].name)   
 
     def action_planned(self):
         for record in self:

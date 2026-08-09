@@ -24,6 +24,8 @@
                         </group>
                         <group>
                             <field name="weeks_count"/>
+                            <field name="hours_per_week" digits="[16,0]"/>
+                            <field name="total_hours" readonly="1" digits="[16,0]"/>
                             <field name="satisfaction_stars" widget="priority" readonly="1" string="Average Satisfaction"/>
                         </group>
                     </group>
