@@ -9,6 +9,7 @@ class SummerTrainingYear(models.Model):
     name = fields.Char(string='Year Name', required=True)
     start_date = fields.Date(string='Start Date', required=True)
     end_date = fields.Date(string='End Date', required=True)
+    reference = fields.Char(string='Reference Number', copy=False, readonly=True, default='New')
     
     weeks_count = fields.Integer(string='Number of Weeks', compute='_compute_weeks', store=True)
     
@@ -59,6 +60,15 @@ class SummerTrainingYear(models.Model):
                 record.avg_satisfaction = sum(values) / len(values)
             else:
                 record.avg_satisfaction = 0.0
+
+    @api.model_create_multi
+    def create(self, vals_list):
+        for vals in vals_list:
+            if vals.get('reference', 'New') == 'New':
+                vals['reference'] = self.env['ir.sequence'].next_by_code(
+                    'summer.training.year'
+                ) or 'New'
+        return super().create(vals_list)
 
     @api.depends('avg_satisfaction')
     def _compute_satisfaction_stars(self):

@@ -7,6 +7,7 @@
     'depends': ['base', 'mail'],
  'data': [
         'security/ir.model.access.csv',
+        'data/ir_sequence_data.xml',
         'views/summer_training_views.xml',
         'views/summer_training_trainee_views.xml',
         'views/summer_training_team_views.xml',
