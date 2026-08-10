@@ -42,9 +42,7 @@ class SummerTrainingTrainee(models.Model):
     withdrawal_reason = fields.Text(string='Withdrawal Reason')
     withdrawal_date = fields.Date(string='Withdrawal Date')
 
-    def action_withdraw(self):
-        for record in self:
-            record.state = 'withdrawn'
+    
 
     _sql_constraints = [
         ('unique_trainee_per_year', 'unique(national_id, year_id)',
@@ -61,10 +59,13 @@ class SummerTrainingTrainee(models.Model):
                 raise ValidationError('The withdrawal date cannot be earlier than the start date of the training year.')
             if record.year_id.end_date and record.withdrawal_date > record.year_id.end_date:    
                 raise ValidationError('The withdrawal date cannot be later than the end date of the training year.')
-           
 
-    @api.constrains('state', 'withdrawal_date')
+
+    @api.constrains('state', 'withdrawal_date', 'withdrawal_reason')
     def _check_withdrawal_state(self):
-         for record in self:
-             if record.state == 'withdrawn' and not record.withdrawal_date:
-                 raise ValidationError('You must specify a withdrawal date when setting the status to Withdrawn/Excluded.')
+        for record in self:
+            if record.state == 'withdrawn':
+                if not record.withdrawal_date:
+                    raise ValidationError('You must specify a withdrawal date when setting the status to Withdrawn/Excluded.')
+                if not record.withdrawal_reason:
+                    raise ValidationError('You must specify a withdrawal reason when setting the status to Withdrawn/Excluded.')          
