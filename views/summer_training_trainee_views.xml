@@ -22,8 +22,8 @@
        <field name="arch" type="xml">
            <form>
               <header>
-                   <button name="action_withdraw" string="Withdraw" type="object" invisible="state == 'withdrawn'" class="oe_highlight"/>
-                   <field name="state" widget="statusbar" statusbar_visible="registered,ongoing,completed,withdrawn"/>
+                   
+                   <field name="state" widget="statusbar" statusbar_visible="registered,ongoing,completed,withdrawn" options="{'clickable': '1'}"/>
               </header>
         <sheet>
               <group>
