@@ -1,4 +1,4 @@
-from odoo import models, fields
+from odoo import models, fields, api
 from odoo.exceptions import ValidationError
 
 class SummerTrainingTeam(models.Model):
@@ -25,3 +25,20 @@ class SummerTrainingTeam(models.Model):
     phone = fields.Char(string='Phone')
 
     email = fields.Char(string='Email')
+    start_date = fields.Date(string='Start Date')
+    end_date = fields.Date(string='End Date')
+    hours = fields.Float(string='Hours', digits=(16, 0))
+
+    @api.constrains('start_date', 'end_date')
+    def _check_dates(self):
+        for record in self:
+            if record.start_date and record.end_date and record.end_date < record.start_date:
+                raise ValidationError("End Date cannot be earlier than Start Date!")
+
+
+    @api.onchange('year_id')
+    def _onchange_year_id(self):
+        if self.year_id:
+            self.start_date = self.year_id.start_date
+            self.end_date = self.year_id.end_date
+            self.hours = self.year_id.total_hours                
