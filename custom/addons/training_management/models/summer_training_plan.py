@@ -1,4 +1,5 @@
-from odoo import models, fields
+from odoo import models, fields, api
+from odoo.exceptions import ValidationError
 
 class SummerTrainingPlan(models.Model):
     _name = 'summer.training.plan'
@@ -20,3 +21,28 @@ class SummerTrainingPlan(models.Model):
     is_completed = fields.Boolean(string='Completed', default=False)
     
     year_id = fields.Many2one('summer.training.year', string='Training Year', ondelete='cascade')
+    
+    day_ids = fields.One2many('summer.training.day', 'plan_id', string='Daily Schedule')
+
+    @api.constrains('day_ids')
+    def _check_days_count(self):
+        for record in self:
+            if len(record.day_ids) > 5:
+                raise ValidationError("عذراً، الحد الأقصى هو 5 أيام فقط لكل أسبوع (من الأحد إلى الخميس)!")
+
+
+class SummerTrainingDay(models.Model):
+    _name = 'summer.training.day'
+    _description = 'Summer Training Day Plan'
+    _order = 'id'
+
+    name = fields.Char(string='Day Title / Topic', required=True)
+    day_of_week = fields.Selection([
+        ('sunday', 'Sunday'),
+        ('monday', 'Monday'),
+        ('tuesday', 'Tuesday'),
+        ('wednesday', 'Wednesday'),
+        ('thursday', 'Thursday'),
+    ], string='Day', required=True)
+    description = fields.Text(string='Daily Tasks & Schedule')
+    plan_id = fields.Many2one('summer.training.plan', string='Training Plan', ondelete='cascade')

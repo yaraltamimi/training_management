@@ -1,6 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
 
+    <record id="view_summer_training_plan_form" model="ir.ui.view">
+        <field name="name">summer.training.plan.form</field>
+        <field name="model">summer.training.plan</field>
+        <field name="arch" type="xml">
+            <form string="Week Training Plan">
+                <sheet>
+                    <group>
+                        <field name="name"/>
+                        <field name="activity_type"/>
+                        <field name="is_completed"/>
+                        <field name="supervisor_feedback"/>
+                    </group>
+                    
+                    <separator string="Daily Schedule"/>
+                    
+                    <field name="day_ids">
+                        <list editable="bottom">
+                            <field name="day_of_week"/>
+                            <field name="name"/>
+                            <field name="description"/>
+                        </list>
+                    </field>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
     <record id="view_summer_training_year_form" model="ir.ui.view">
         <field name="name">summer.training.year.form</field>
         <field name="model">summer.training.year</field>
@@ -15,6 +42,12 @@
                     <field name="state" widget="statusbar" statusbar_visible="draft,planned,ongoing,done,archived"/>
                 </header>
                 <sheet>
+                    <div class="oe_button_box" name="button_box">
+                        <button name="%(action_summer_training_year)d" type="action" class="oe_stat_button" icon="fa-list-alt">
+                            <field name="weeks_count" widget="statinfo" string="Training Plans"/>
+                        </button>
+                    </div>
+
                     <group>
                         <group>
                             <field name="name"/>
@@ -34,7 +67,7 @@
                     <notebook>
                         <page string="Training Plans &amp; Weeks">
                             <field name="plan_ids">
-                                <list editable="bottom">
+                                <list string="Training Plans">
                                     <field name="sequence" widget="handle"/>
                                     <field name="name"/>
                                     <field name="activity_type"/>

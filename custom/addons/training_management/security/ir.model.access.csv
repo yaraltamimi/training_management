@@ -6,3 +6,4 @@ access_summer_training_trainee,access_summer_training_trainee,model_summer_train
 access_summer_training_team,access_summer_training_team,model_summer_training_team,base.group_user,1,1,1,1
 access_summer_training_survey,access_summer_training_survey,model_summer_training_survey,base.group_user,1,1,1,1
 access_summer_training_trainee_document,access_summer_training_trainee_document,model_summer_training_trainee_document,base.group_user,1,1,1,1
+access_summer_training_day,summer.training.day,model_summer_training_day,,1,1,1,1
