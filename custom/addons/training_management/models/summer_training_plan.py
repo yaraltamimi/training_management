@@ -28,7 +28,7 @@ class SummerTrainingPlan(models.Model):
     def _check_days_count(self):
         for record in self:
             if len(record.day_ids) > 5:
-                raise ValidationError("عذراً، الحد الأقصى هو 5 أيام فقط لكل أسبوع (من الأحد إلى الخميس)!")
+                raise ValidationError("Sorry, the maximum limit is 5 days per week!")
 
 
 class SummerTrainingDay(models.Model):
@@ -45,4 +45,10 @@ class SummerTrainingDay(models.Model):
         ('thursday', 'Thursday'),
     ], string='Day', required=True)
     description = fields.Text(string='Daily Tasks & Schedule')
-    plan_id = fields.Many2one('summer.training.plan', string='Training Plan', ondelete='cascade')
+    plan_id = fields.Many2one(
+        'summer.training.plan', 
+        string='Training Plan', 
+        ondelete='cascade', 
+        required=True,
+        default=lambda self: self.env.context.get('default_plan_id') or self.env.context.get('active_id')
+    )

@@ -1,100 +1,53 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
 
-
     <record id="view_summer_training_team_list" model="ir.ui.view">
-
         <field name="name">summer.training.team.list</field>
-
         <field name="model">summer.training.team</field>
-
         <field name="arch" type="xml">
-
             <list string="Training Team">
-
                 <field name="name"/>
-
                 <field name="role"/>
-
                 <field name="year_id"/>
-
                 <field name="phone"/>
-
                 <field name="email"/>
-
             </list>
-
         </field>
-
     </record>
-
-
 
     <record id="view_summer_training_team_form" model="ir.ui.view">
-
         <field name="name">summer.training.team.form</field>
-
         <field name="model">summer.training.team</field>
-
         <field name="arch" type="xml">
-
             <form>
-
                 <sheet>
-
                     <group>
-
                         <group string="Member Information">
-
-                            <field name="name"/>
-
+                            <field name="partner_id" options="{'no_create': False, 'no_edit': False}"/>
+                            <field name="name" invisible="1"/>
                             <field name="member_id"/>
-
                             <field name="role"/>
-
                         </group>
-
                         <group string="Contact &amp; Assignment">
-
                             <field name="phone"/>
-
                             <field name="email"/>
-
                             <field name="year_id"/>
-                            
-                           <field name="start_date"/>
-
-                           <field name="end_date"/>
-
-                           <field name="hours"/>
-
+                            <field name="start_date"/>
+                            <field name="end_date"/>
+                            <field name="hours"/>
                         </group>
-
                     </group>
-
                 </sheet>
-
             </form>
-
         </field>
-
     </record>
-
-
 
     <record id="action_summer_training_team" model="ir.actions.act_window">
-
         <field name="name">Training Team</field>
-
         <field name="res_model">summer.training.team</field>
-
         <field name="view_mode">list,form</field>
-
     </record>
 
-
-
     <menuitem id="menu_summer_training_team" name="Training Team" parent="menu_summer_training_root" action="action_summer_training_team" sequence="30"/>
-
 
 </odoo>

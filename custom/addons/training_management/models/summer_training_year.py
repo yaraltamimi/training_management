@@ -18,8 +18,8 @@ class SummerTrainingYear(models.Model):
     ], string='Training Type', default='onsite', tracking=True)
 
     weeks_count = fields.Integer(string='Number of Weeks', compute='_compute_weeks', store=True)
-    hours_per_week = fields.Float(string='Hours per Week', default=0.0)
-    total_hours = fields.Float(string='Total Hours', compute='_compute_total_hours', store=True)
+    hours_per_week = fields.Float(string='Hours per Week', default=30.0, tracking=True)
+    total_hours = fields.Float(string='Total Hours', compute='_compute_total_hours', store=True, tracking=True)
     
     plan_ids = fields.One2many('summer.training.plan', 'year_id', string='Training Plans & Weeks')
     document_ids = fields.One2many('summer.training.year.document', 'training_year_id', string='Documents')
@@ -61,6 +61,8 @@ class SummerTrainingYear(models.Model):
     @api.depends('weeks_count', 'hours_per_week')
     def _compute_total_hours(self):
         for record in self:
+            if not record.hours_per_week:
+                record.hours_per_week = 30.0
             record.total_hours = record.weeks_count * record.hours_per_week
 
     @api.depends('survey_ids.overall_satisfaction')
@@ -80,6 +82,8 @@ class SummerTrainingYear(models.Model):
                 vals['reference'] = self.env['ir.sequence'].next_by_code(
                     'summer.training.year'
                 ) or 'New'
+            if not vals.get('hours_per_week'):
+                vals['hours_per_week'] = 30.0
         return super().create(vals_list)
 
     @api.depends('avg_satisfaction')
@@ -118,4 +122,3 @@ class SummerTrainingYear(models.Model):
     def action_archived(self):
         for record in self:
             record.state = 'archived'
-            

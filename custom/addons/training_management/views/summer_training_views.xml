@@ -11,7 +11,6 @@
                     <button name="action_ongoing" string="Start" type="object" invisible="state != 'planned'" class="btn-primary"/>
                     <button name="action_done" string="Done" type="object" invisible="state != 'ongoing'" class="btn-success"/>
                     <button name="action_archived" string="Archive" type="object" invisible="state in ('done', 'archived')"/>
-                    
                     <field name="state" widget="statusbar" statusbar_visible="draft,planned,ongoing,done,archived"/>
                 </header>
                 <sheet>
@@ -19,6 +18,7 @@
                         <group>
                             <field name="name"/>
                             <field name="reference" readonly="1"/>
+                            <field name="training_type"/>
                             <field name="start_date"/>
                             <field name="end_date"/>
                         </group>
@@ -32,8 +32,8 @@
                     
                     <notebook>
                         <page string="Training Plans &amp; Weeks">
-                            <field name="plan_ids">
-                                <list editable="bottom">
+                            <field name="plan_ids" context="{'default_year_id': id}">
+                                <list>
                                     <field name="sequence" widget="handle"/>
                                     <field name="name"/>
                                     <field name="activity_type"/>
@@ -48,34 +48,50 @@
                                 <list editable="bottom">
                                     <field name="name"/>
                                     <field name="document_type"/>
-                                    <field name="document_file" filename="file_name"/>
+                                    <field name="document_file" filename="file_name" widget="binary"/>
                                     <field name="file_name" invisible="1"/>
                                 </list>
                             </field>
                         </page>
 
-                        <page string="Trainees">
-                            <field name="trainee_ids">
-                            <list editable="bottom">
-                                    <field name="name"/>
-                                    <field name="university"/>
-                                    <field name="state"/>
-                             </list>
-                             </field>
-                        </page>
-
                         <page string="Training Team">
                             <field name="team_ids">
-                            <list editable="bottom">
+                                <list editable="bottom">
                                     <field name="name"/>
                                     <field name="role"/>
                                     <field name="phone"/>
                                     <field name="email"/>                    
-                             </list>
-                             </field>
+                                </list>
+                            </field>
                         </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
 
-
+    <record id="view_summer_training_plan_form" model="ir.ui.view">
+        <field name="name">summer.training.plan.form</field>
+        <field name="model">summer.training.plan</field>
+        <field name="arch" type="xml">
+            <form string="Training Plans &amp; Weeks">
+                <sheet>
+                    <group>
+                        <field name="name"/>
+                        <field name="activity_type"/>
+                        <field name="is_completed" widget="boolean_toggle"/>
+                        <field name="supervisor_feedback"/>
+                    </group>
+                    <notebook>
+                        <page string="Daily Schedule">
+                            <field name="day_ids" context="{'default_plan_id': id}">
+                                <list editable="bottom">
+                                    <field name="day_of_week"/>
+                                    <field name="name"/>
+                                    <field name="description"/>
+                                </list>
+                            </field>
+                        </page>
                     </notebook>
                 </sheet>
             </form>
@@ -103,8 +119,50 @@
         <field name="view_mode">list,form</field>
     </record>
 
-    
-    <menuitem id="menu_summer_training_root" name="Training Management"/>
-    <menuitem id="menu_summer_training_year" name="Training Years" parent="menu_summer_training_root" action="action_summer_training_year"/>
+    <record id="action_summer_training_trainee" model="ir.actions.act_window">
+        <field name="name">Trainees</field>
+        <field name="res_model">summer.training.trainee</field>
+        <field name="view_mode">list,form</field>
+    </record>
+
+    <record id="action_summer_training_team" model="ir.actions.act_window">
+        <field name="name">Training Team</field>
+        <field name="res_model">summer.training.team</field>
+        <field name="view_mode">list,form</field>
+    </record>
+
+    <record id="action_summer_training_survey" model="ir.actions.act_window">
+        <field name="name">Surveys</field>
+        <field name="res_model">summer.training.survey</field>
+        <field name="view_mode">list,form</field>
+    </record>
+
+    <menuitem id="menu_summer_training_root" 
+              name="Training Management" 
+              sequence="10"/>
+
+    <menuitem id="menu_summer_training_year" 
+              name="Training Years" 
+              parent="menu_summer_training_root" 
+              action="action_summer_training_year" 
+              sequence="10"/>
+
+    <menuitem id="menu_summer_training_trainee" 
+              name="Trainees" 
+              parent="menu_summer_training_root" 
+              action="action_summer_training_trainee" 
+              sequence="20"/>
+
+    <menuitem id="menu_summer_training_team" 
+              name="Training Team" 
+              parent="menu_summer_training_root" 
+              action="action_summer_training_team" 
+              sequence="30"/>
+
+    <menuitem id="menu_summer_training_survey" 
+              name="Surveys" 
+              parent="menu_summer_training_root" 
+              action="action_summer_training_survey" 
+              sequence="40"/>
 
 </odoo>
