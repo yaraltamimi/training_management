@@ -28,7 +28,6 @@ class SummerTrainingTrainee(models.Model):
     ], string='Academic Level')
     gpa = fields.Float(string='GPA')
 
-    # تم الحفاظ على الربط بالسنة لضمان استقلالية المتدرب
     year_id = fields.Many2one('summer.training.year', string='Training Year', required=True, tracking=True)
     document_ids = fields.One2many('summer.training.trainee.document', 'trainee_id', string='Documents')
 

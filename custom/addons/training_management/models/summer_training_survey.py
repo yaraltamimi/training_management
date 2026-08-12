@@ -18,7 +18,6 @@ class SummerTrainingSurvey(models.Model):
         string='Submission Date', default=fields.Date.context_today
     )
 
-    # --- حقول تقييم المتدربة (خاصة بنوع Trainee Evaluation) ---
     attendance_rating = fields.Selection([
         ('1', 'Poor'),
         ('2', 'Fair'),
@@ -43,7 +42,6 @@ class SummerTrainingSurvey(models.Model):
         ('5', 'Excellent'),
     ], string='Commitment Rating')
 
-    # --- حقول تقييم السنة التدريبية (خاصة بنوع Training Year Evaluation) ---
     content_rating = fields.Selection([
         ('1', 'Poor'),
         ('2', 'Fair'),
