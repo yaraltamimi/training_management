@@ -55,6 +55,11 @@
         <field name="view_mode">list,form</field>
     </record>
 
-    <menuitem id="menu_summer_training_survey" name="Surveys" parent="menu_summer_training_root" action="action_summer_training_survey" sequence="40"/>
+    <menuitem id="menu_summer_training_survey" 
+              name="Surveys" 
+              parent="menu_summer_training_root" 
+              action="action_summer_training_survey" 
+              groups="training_management.group_trainee,training_management.group_training_supervisor"
+              sequence="40"/>
 
 </odoo>

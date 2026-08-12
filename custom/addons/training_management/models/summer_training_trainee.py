@@ -7,6 +7,7 @@ class SummerTrainingTrainee(models.Model):
     _inherit = ['mail.thread', 'mail.activity.mixin']
 
     name = fields.Char(string='Trainee Name', required=True, tracking=True)
+    user_id = fields.Many2one('res.users', string='Related User', default=lambda self: self.env.user, tracking=True)
     national_id = fields.Char(string='National ID', tracking=True)
     email = fields.Char(string='Email', tracking=True)
     phone = fields.Char(string='Phone', tracking=True)

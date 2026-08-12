@@ -139,30 +139,35 @@
 
     <menuitem id="menu_summer_training_root" 
               name="Training Management" 
+              groups="training_management.group_trainee,training_management.group_training_manager"
               sequence="10"/>
 
     <menuitem id="menu_summer_training_year" 
               name="Training Years" 
               parent="menu_summer_training_root" 
               action="action_summer_training_year" 
+              groups="training_management.group_trainee,training_management.group_training_manager"
               sequence="10"/>
 
     <menuitem id="menu_summer_training_trainee" 
               name="Trainees" 
               parent="menu_summer_training_root" 
               action="action_summer_training_trainee" 
+              groups="training_management.group_training_manager"
               sequence="20"/>
 
     <menuitem id="menu_summer_training_team" 
               name="Training Team" 
               parent="menu_summer_training_root" 
               action="action_summer_training_team" 
+              groups="training_management.group_training_manager"
               sequence="30"/>
 
     <menuitem id="menu_summer_training_survey" 
               name="Surveys" 
               parent="menu_summer_training_root" 
               action="action_summer_training_survey" 
+              groups="training_management.group_trainee,training_management.group_training_manager"
               sequence="40"/>
 
 </odoo>
